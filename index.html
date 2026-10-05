@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gunung Permen Stroberi 🍓</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light;--ink:#3a2a6b;--soft:#6a5a96;--pk:#d4337f;--pkd:#b0246a;--bl:#2f6fd0;--rose:#ff5fa0;--gold:#ffc83d;--cream:#fffafd;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{overflow-x:hidden;max-width:100%}
+*{box-sizing:border-box;min-width:0}
+button{touch-action:manipulation;font-family:inherit}
+body{margin:0;max-width:100%;overflow-x:hidden;background:linear-gradient(170deg,#c9e8ff 0,#eaf3ff 40%,#ffd6ea 100%);background-attachment:fixed;color:var(--ink);font-family:Nunito,system-ui,sans-serif;font-weight:700;font-size:1rem;line-height:1.5;overflow-wrap:anywhere}
+[hidden]{display:none!important}
+.sp{position:fixed;top:0;left:0;right:0;bottom:0;z-index:0;pointer-events:none;overflow:hidden}
+.sp i{position:absolute;font-style:normal;color:#f08ab8;animation:tw 3s ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:1;transform:scale(1.25)}}
+main{position:relative;z-index:1;width:100%;max-width:480px;margin:0 auto;padding:64px 16px 130px}
+h1{font-family:Fredoka,sans-serif;font-weight:700;font-size:1.5rem;line-height:1.25;margin:0 0 8px;color:var(--pkd);text-align:center}
+.intro{margin:0 0 14px;color:var(--soft);text-align:center;font-weight:600}
+.stats{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.chip{padding:5px 14px;border-radius:999px;background:var(--cream);border:3px solid var(--ink);font:800 .9rem Nunito,sans-serif;color:var(--ink)}
+button.chip{cursor:pointer;box-shadow:0 3px 0 var(--ink)}
+button.chip:active{transform:translateY(3px);box-shadow:none}
+/* HUD bawah */
+.hud{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px));background:rgba(255,250,253,.95);border-top:3px solid var(--ink)}
+.hudi{max-width:480px;margin:0 auto}
+.now{margin:0 0 6px;font-size:.88rem;line-height:1.35;text-align:center}
+.atp{margin:0 0 6px;font-size:.85rem;line-height:1.35;text-align:center}
+/* peta */
+.mapi{position:relative;width:100%;padding-top:177.78%;border:4px solid var(--ink);border-radius:22px;overflow:hidden;background:linear-gradient(180deg,#bfe0ff 0,#e9f1ff 45%,#ffd3e8 100%);box-shadow:0 5px 0 var(--ink)}
+.mapimg{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;display:block}
+.mapl{position:absolute;top:0;left:0;width:100%;height:100%;display:none;pointer-events:none}
+.mapi.nomap .mapimg{display:none}
+.mapi.nomap .mapl{display:block}
+.mapd{position:absolute;top:0;left:0;right:0;bottom:0;display:none;pointer-events:none;font-size:2rem;opacity:.5}
+.mapi.nomap .mapd{display:block}
+.mk{position:absolute;width:52px;height:52px;margin:-26px 0 0 -26px;padding:0;border:3px solid var(--ink);border-radius:50%;background:#fff;color:var(--ink);font:800 1.15rem Fredoka,sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 0 var(--ink);z-index:2}
+.mk:active{margin-top:-23px;box-shadow:0 1px 0 var(--ink)}
+.mk.done{background:var(--gold)}
+.mk.open{background:var(--pk);color:#fff;animation:pl 1.8s infinite}
+.mk.lk0{background:#e4e9f5;color:#6f7da0;border-color:#6b7a9c;box-shadow:0 3px 0 #9aa8c4}
+.mk.hid{width:34px;height:34px;margin:-17px 0 0 -17px;background:rgba(255,255,255,.75);color:#6f7da0;border-color:#6b7a9c;box-shadow:none;font-size:1rem}
+.mk .mn{pointer-events:none}
+.ml{position:absolute;left:50%;top:100%;transform:translateX(-50%);margin-top:7px;max-width:46vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:2px 10px;border:2px solid var(--ink);border-radius:999px;background:rgba(255,255,255,.96);color:var(--ink);font:800 .72rem Nunito,sans-serif;pointer-events:none}
+.mk.hid .ml{display:none}
+.mapi:not(.nomap) .ml{display:none}
+.mb2{position:absolute;left:50%;bottom:100%;transform:translateX(-50%);margin-bottom:8px;white-space:nowrap;padding:3px 10px;border:2px solid var(--ink);border-radius:999px;background:var(--gold);color:var(--ink);font:800 .72rem Nunito,sans-serif;pointer-events:none;animation:bob 1.6s ease-in-out infinite}
+@keyframes pl{0%{box-shadow:0 4px 0 var(--ink),0 0 0 0 rgba(212,51,127,.55)}70%{box-shadow:0 4px 0 var(--ink),0 0 0 16px rgba(212,51,127,0)}100%{box-shadow:0 4px 0 var(--ink),0 0 0 0 rgba(212,51,127,0)}}
+.ban{display:block;width:100%;height:120px;object-fit:cover;border:2px solid var(--ink);border-radius:10px;margin:0 0 10px;background:#dfeaff}
+.nav{display:block;width:100%;margin-top:12px;padding:15px 12px;border:3px solid var(--ink);border-radius:16px;background:var(--pk);color:#fff;font:800 1.05rem Nunito,sans-serif;box-shadow:0 5px 0 var(--ink);cursor:pointer}
+.nav:active{transform:translateY(4px);box-shadow:0 1px 0 var(--ink)}
+.nav.alt{background:#fff;color:var(--ink)}
+.pin2:focus-visible,.nav:focus-visible,.chip:focus-visible,.mk:focus-visible,.cbtn:focus-visible,.mus:focus-visible,.sfxb:focus-visible,.sx:focus-visible,.dlg:focus-visible{outline:3px solid var(--rose);outline-offset:3px}
+.slot{display:flex;align-items:center;justify-content:center;min-height:270px;border:4px dashed var(--ink);border-radius:20px;background:rgba(255,250,255,.8);margin-top:12px;padding:12px}
+.stampw{transform:rotate(-8deg);display:flex;align-items:center;justify-content:center}
+.stamp{width:236px;height:236px;border:6px solid var(--pk);border-radius:50%;box-shadow:inset 0 0 0 6px #fff,inset 0 0 0 9px var(--pk);background:#fff;color:var(--pk);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:26px}
+.stamp b{font-family:Fredoka,sans-serif;font-size:1.05rem;line-height:1.2}
+.stamp span{display:block;font-size:1.05rem;line-height:1.3;color:var(--ink);margin:6px 0}
+.stamp em{display:block;font-style:normal;font-size:.82rem}
+.capimg{display:none;width:min(300px,76vw);height:auto;filter:url(#kg) drop-shadow(0 6px 8px rgba(58,42,107,.3))}
+.stampw.hasimg .capimg{display:block}
+.stampw.hasimg .stamp{display:none}
+.stampw.hit{animation:hit .5s cubic-bezier(.2,1.4,.4,1)}
+@keyframes hit{from{transform:rotate(-20deg) scale(1.8);opacity:0}to{transform:rotate(-8deg) scale(1);opacity:1}}
+.stcap{margin:10px 0 0;text-align:center;font-family:Fredoka,sans-serif;color:var(--pkd);font-size:1rem;line-height:1.4}
+.ph{margin:0;color:var(--soft);text-align:center;padding:0 20px}
+.endc{margin:0 0 6px;padding:14px;border:3px solid var(--ink);border-radius:20px;background:var(--cream);text-align:center}
+.endc b{display:block;font-family:Fredoka,sans-serif;font-size:1.15rem;color:var(--pkd);margin:2px 0 6px}
+.endc small{display:block;color:var(--soft);font-weight:600}
+.cf{position:fixed;z-index:70;font-size:1.7rem;pointer-events:none;animation:cf 1.5s ease-out forwards}
+@keyframes cf{from{transform:translate(0,0);opacity:1}to{transform:translate(var(--dx),var(--dy));opacity:0}}
+.end{margin:20px 0 0;text-align:center;font-family:Fredoka,sans-serif;font-size:1.05rem;line-height:1.5;color:var(--pkd)}
+.end small{display:block;font-family:Nunito,sans-serif;font-size:.9rem;color:var(--soft);margin-top:6px;font-weight:600}
+.mv{position:fixed;top:0;left:0;right:0;bottom:0;z-index:40;background:rgba(58,42,107,.6);display:flex;overflow-y:auto;padding:max(16px,env(safe-area-inset-top)) 14px max(16px,env(safe-area-inset-bottom))}
+.box{width:100%;max-width:440px;margin:auto;background:var(--cream);border:4px solid var(--ink);border-radius:22px;padding:16px}
+.dd{border:3px solid var(--ink);border-radius:14px;background:#fff;text-align:center;padding:14px 12px}
+.dk{margin:0;font-size:.78rem;letter-spacing:.08em;color:var(--soft)}
+.dtt{margin:2px 0;font-family:Fredoka,sans-serif;font-size:1.25rem;line-height:1.25;color:var(--pkd)}
+.dm{margin:6px 0;font-size:1.05rem}
+.dm b{font-size:1.9rem}
+.dq{margin:6px 0;font-weight:600;color:var(--soft)}
+.dp{margin:10px 0 0;padding-top:10px;border-top:2px dashed var(--ink);font-size:.95rem}
+.jl{margin:0 0 10px;text-align:left;padding:10px 12px;border:2px solid var(--ink);border-radius:12px;background:#fff}
+.jl.no{background:#eceaf6;color:var(--soft)}
+.jl b{display:block}
+.jl span{font-weight:600;font-size:.92rem}
+.jh{margin:12px 0 6px;font-family:Fredoka,sans-serif;font-size:.95rem;color:var(--pkd);text-align:center}
+.ta{display:block;width:100%;height:96px;margin:10px 0 0;padding:8px;border:2px solid var(--ink);border-radius:10px;background:#fff;color:var(--ink);font:600 .85rem monospace}
+.mus,.sfxb{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));z-index:35;width:44px;height:44px;padding:0;border:3px solid var(--ink);border-radius:50%;background:#fff;font-size:1.2rem;cursor:pointer;box-shadow:0 3px 0 var(--ink)}
+.mus{right:12px}.sfxb{right:64px}
+.mus.on{background:#ffd9ea}
+/* cerita */
+.stg{position:fixed;top:0;left:0;right:0;bottom:0;z-index:30;display:flex;flex-direction:column;background:#fff}
+.scn{position:relative;flex:1;min-height:0;overflow:hidden;background:linear-gradient(var(--b1),var(--b2))}
+.sx{position:absolute;top:calc(10px + env(safe-area-inset-top,0px));left:12px;z-index:5;height:44px;padding:0 14px;border:3px solid var(--ink);border-radius:999px;background:#fff;color:var(--ink);font:800 .9rem Nunito,sans-serif;cursor:pointer;box-shadow:0 3px 0 var(--ink)}
+.sb{position:absolute;top:calc(64px + env(safe-area-inset-top,0px));left:12px;z-index:5;padding:3px 12px;border-radius:999px;background:rgba(255,255,255,.92);border:2px solid var(--ink);font-size:.85rem}
+.sc{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-around;align-items:flex-end;font-size:2.6rem;opacity:.4;padding:0 6px 4px;pointer-events:none}
+.sh{position:absolute;left:0;right:0;top:14%;text-align:center;font-size:2.6rem;pointer-events:none}
+.scn.hasbg .sc,.scn.hasbg .sh{display:none}
+.por{position:absolute;bottom:0;width:82%;height:84%;display:flex;align-items:flex-end;justify-content:center;transition:transform .25s,opacity .25s;pointer-events:none}
+.por.me{left:-17%}.por.lu{right:-17%}
+.por img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;opacity:0;filter:url(#kg) drop-shadow(0 6px 8px rgba(58,42,107,.35))}
+.nokey .por img,.nokey .capimg{filter:drop-shadow(0 6px 8px rgba(58,42,107,.35))}
+.por.ok img{opacity:1}
+.por.flip img{transform:scaleX(-1)}
+.por .pe{display:none;font-size:6rem;line-height:1;margin-bottom:18px}
+.por.bad .pe{display:block}
+.por.bad img{display:none}
+.por.dim{opacity:.55;transform:scale(.94)}
+.por.on{transform:scale(1.03);z-index:2}
+.ubi{position:absolute;left:50%;top:15%;margin-left:-1.6rem;font-size:3.2rem;line-height:1;transition:transform .25s,opacity .25s;animation:fl 3s ease-in-out infinite;filter:drop-shadow(0 4px 6px rgba(58,42,107,.3));z-index:3;pointer-events:none}
+.ubi.dim{opacity:.6}.ubi.on{transform:scale(1.25)}
+@keyframes fl{0%,100%{margin-top:0}50%{margin-top:-14px}}
+.dlg{position:relative;flex:none;background:rgba(255,250,255,.98);border-top:4px solid #f3a6c9;border-radius:26px 26px 0 0;padding:20px 18px calc(18px + env(safe-area-inset-bottom,0px));min-height:230px;cursor:pointer}
+.dnm{display:inline-block;margin:-36px 0 6px;padding:3px 14px;border-radius:999px;background:var(--pk);color:#fff;font-weight:800;border:3px solid var(--ink)}
+.dnm.P{background:var(--bl)}
+.dnm.L{background:#7a49c9}
+.dtx{font-size:1.08rem;line-height:1.6;min-height:4.8em}
+.dtx.nar{font-style:italic;color:var(--soft)}
+.dnx{position:absolute;right:20px;bottom:calc(10px + env(safe-area-inset-bottom,0px));font-size:1.2rem;color:var(--pk);animation:bb 1.2s ease-in-out infinite}
+@keyframes bb{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+.chs{display:grid;gap:10px;margin-top:6px}
+.cbtn{padding:13px 14px;border:3px solid var(--ink);border-radius:16px;background:#fff;color:var(--ink);font:800 1rem Nunito,sans-serif;text-align:left;cursor:pointer;box-shadow:0 4px 0 var(--ink)}
+.cbtn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
+.bf{position:fixed;left:50%;top:38%;z-index:60;transform:translateX(-50%);padding:6px 16px;border-radius:999px;background:#fff;border:3px solid var(--rose);color:var(--rose);font-weight:800;animation:bfu 1.4s ease-out forwards;pointer-events:none}
+@keyframes bfu{from{transform:translate(-50%,0);opacity:1}to{transform:translate(-50%,-70px);opacity:0}}
+@media (prefers-reduced-motion:reduce){.stampw.hit,.mk.open,.mb2,.dnx,.sp i,.chev,.ubi{animation:none}.cf,.bf{display:none}.lk{transition:opacity .3s}.lk.open{transform:none}}
+/* layar kunci */
+.lk{position:fixed;top:0;left:0;right:0;bottom:0;z-index:80;display:flex;flex-direction:column;align-items:center;text-align:center;touch-action:none;cursor:pointer;user-select:none;-webkit-user-select:none;background:url(lockscreen.jpg) center/cover no-repeat,linear-gradient(170deg,#b6dbff 0,#e1f0ff 45%,#ffd1e6 100%);padding:max(48px,calc(env(safe-area-inset-top,0px) + 32px)) 24px max(36px,calc(env(safe-area-inset-bottom,0px) + 24px));transition:transform .55s cubic-bezier(.3,.8,.3,1),opacity .55s}
+.lk::before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg,rgba(255,255,255,.55) 0,rgba(255,255,255,0) 36%,rgba(255,255,255,0) 66%,rgba(255,255,255,.62) 100%);pointer-events:none}
+.lk>*{position:relative}
+.lk.open{transform:translateY(-100%);opacity:0;pointer-events:none}
+.lk:focus-visible{outline:4px solid var(--rose);outline-offset:-8px}
+.lk-date{margin:0;font-weight:800;text-shadow:0 1px 10px rgba(255,255,255,.95)}
+.lk-time{margin:0;font-size:4.6rem;line-height:1.1;font-weight:800;text-shadow:0 1px 12px rgba(255,255,255,.95)}
+.lk-title{margin:22px 0 6px;font-family:Fredoka,sans-serif;font-size:1.8rem;line-height:1.2;color:var(--pkd);text-shadow:0 1px 12px rgba(255,255,255,.95)}
+.lk-sub{margin:0;color:var(--ink);text-shadow:0 1px 10px rgba(255,255,255,.95)}
+.lk-bot{margin-top:auto;display:flex;flex-direction:column;align-items:center;gap:10px}
+.chev{font-size:1.8rem;line-height:1;color:var(--pkd);animation:bob 1.6s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(4px);opacity:.7}50%{transform:translateX(-50%) translateY(-4px);opacity:1}}
+.lk .chev{animation:lb 1.6s ease-in-out infinite}
+@keyframes lb{0%,100%{transform:translateY(4px);opacity:.5}50%{transform:translateY(-6px);opacity:1}}
+.lk-go{margin:0;padding:14px 30px;border:3px solid var(--ink);border-radius:16px;background:var(--pk);color:#fff;font-weight:800;font-size:1.1rem;box-shadow:0 5px 0 var(--ink)}
+.lk-hint{margin:0;font-size:.85rem;color:var(--ink);text-shadow:0 1px 8px rgba(255,255,255,.95)}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<!-- penghapus latar hijau polos (#00FF00) otomatis. Aman untuk PNG yang sudah transparan. -->
+<filter id="kg" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+<feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -3 3 0 0 -0.3" result="gr"/>
+<feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 3 -3 0 -0.3" result="gb"/>
+<feComposite in="gr" in2="gb" operator="arithmetic" k1="1" k2="0" k3="0" k4="0" result="gg"/>
+<feComposite in="SourceGraphic" in2="gg" operator="out"/>
+</filter></defs></svg>
+<div class="sp" id="sp" aria-hidden="true"></div>
+<div class="lk" id="lk" role="button" tabindex="0" aria-label="Buka kunci layar">
+<p class="lk-date" id="lkd"></p><p class="lk-time" id="lkt"></p>
+<p class="lk-title"></p><p class="lk-sub"></p>
+<div class="lk-bot"><span class="chev" aria-hidden="true">⌃</span><p class="lk-go" id="lkgo">Mulai mendaki</p><p class="lk-hint">Ketuk atau usap ke atas</p></div>
+</div>
+<main>
+<section id="hm">
+<h1>Gunung Permen Stroberi 🍓</h1>
+<p class="intro" id="intro"></p>
+<div class="mapi" id="mapi">
+<img class="mapimg" id="mapimg" src="peta.jpg" alt="Peta Gunung Permen Stroberi">
+<svg class="mapl" id="mapl" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><polyline id="mpl" fill="none" stroke="#ff7fb4" stroke-width="3" stroke-dasharray="2 2.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" points=""/></svg>
+<div class="mapd" aria-hidden="true"><span style="position:absolute;left:8%;top:6%">☁️</span><span style="position:absolute;right:8%;top:16%">✨</span><span style="position:absolute;left:12%;top:46%">🍬</span><span style="position:absolute;right:10%;top:70%">🍓</span><span style="position:absolute;left:10%;bottom:6%">🌷</span><span style="position:absolute;left:44%;top:3%">🐋</span></div>
+</div>
+</section>
+<section id="fin" hidden>
+<h1>Puncak Paus Jelly 🐋</h1>
+<div class="endc" id="endc"></div>
+<div class="slot"><p class="ph" id="ph">Cap pendakian hari ini di sini</p>
+<div class="stampw" id="stamp" hidden><img class="capimg" id="capimg" src="cap.png" alt="Cap pendakian selesai"><div class="stamp" id="stampf"><b>Pendakian Selesai 🍓</b><span id="stc"></span><em id="sdate"></em></div></div></div>
+<p class="stcap" id="stcap" hidden></p>
+<button class="nav" id="press" type="button">Cap pendakian hari ini 🍓</button>
+<p class="end" id="bye" hidden><span id="endm"></span><small id="ends"></small></p>
+<button class="nav alt" id="again" type="button">Ulangi pendakian, cari ending lain 🔁</button>
+<button class="nav alt" id="back" type="button">◀ Kembali ke peta</button>
+</section>
+</main>
+<div class="hud" id="hud"><div class="hudi" id="hudi">
+<div id="hudn"><p class="now" id="now"></p>
+<div class="stats"><span class="chip" id="cBond">💖 0</span><span class="chip" id="cLight">🍬 0/9</span><button class="chip" id="bJur" type="button">📜 Jurnal</button><span class="chip" id="uji" hidden>⚙ Mode uji</span></div></div>
+<div id="huda" hidden><p class="atp"><b>Mode atur titik.</b> Geser tiap nomor ke lokasinya di peta. Posisi tersimpan otomatis.</p><div class="stats"><button class="chip" id="aLihat" type="button">📋 Lihat angka</button><button class="chip" id="aReset" type="button">↺ Reset</button><button class="chip" id="aSelesai" type="button">✔ Selesai</button></div></div>
+</div></div>
+<audio id="bgm" src="fantasi.mp3" loop preload="auto"></audio>
+<button class="sfxb" id="sfxb" type="button" aria-label="Efek suara">🔔</button>
+<button class="mus" id="mus" type="button" aria-pressed="false" aria-label="Putar musik" hidden>🎵</button>
+<div class="stg" id="stg" hidden>
+<div class="scn" id="scn">
+<button class="sx" id="sx" type="button">✕ Keluar</button>
+<p class="sb" id="sb">💖 0</p>
+<div class="sh" id="sh"></div><div class="sc" id="sc"></div>
+<div class="ubi" id="ubi" aria-hidden="true" hidden>🪼</div>
+<div class="por me" id="pme" aria-hidden="true"><img id="imz" alt=""><span class="pe" id="pez">👧</span></div>
+<div class="por lu" id="plu" aria-hidden="true"><img id="imo" alt=""><span class="pe" id="peo">🫧</span></div>
+</div>
+<div class="dlg" id="dlg" tabindex="0" role="button" aria-label="Lanjutkan cerita">
+<span class="dnm" id="dnm"></span>
+<div class="dtx" id="dtx" aria-live="polite"></div>
+<div class="chs" id="chs" hidden></div>
+<span class="dnx" id="dnx" aria-hidden="true">▾</span>
+</div>
+</div>
+<div class="mv" id="mv" hidden><div class="box" role="dialog" aria-modal="true"><div id="mc"></div><div id="mb"></div></div></div>
+<script>
+/* Layar kunci + musik: sengaja dipisah dan mandiri, supaya tetap jalan walau skrip cerita bermasalah */
+(function(){
+var d=document,$=function(id){return d.getElementById(id)};
+var lk=$("lk"),inertEls=d.querySelectorAll("main,.hud"),bgm=$("bgm"),mus=$("mus"),locked=true,wasOn=false,HK="gp-started";
+function two(n){return("0"+n).slice(-2)}
+function tick(){try{var t=new Date();$("lkt").textContent=two(t.getHours())+":"+two(t.getMinutes());$("lkd").textContent=t.toLocaleDateString("id-ID",{weekday:"long",day:"numeric",month:"long"})}catch(e){}}
+tick();var tk=setInterval(tick,10000);
+var started=false;
+try{started=!!localStorage.getItem(HK)}catch(e){}
+try{var st=JSON.parse(localStorage.getItem("gp-state")||"null");if(st&&(st.cap||(st.done&&st.done.length)))started=true}catch(e){}
+function label(a,b,st2){$("lkgo").textContent=(st2||started)?b:a}
+label("Mulai mendaki 🍓","Lanjut mendaki 🍓");
+function setInert(v){try{for(var i=0;i<inertEls.length;i++)inertEls[i].inert=v}catch(e){}}
+setInert(true);
+d.body.style.overflow="hidden";
+function unlock(){
+if(!locked)return;locked=false;clearInterval(tk);
+try{localStorage.setItem(HK,"1")}catch(e){}
+try{lk.style.transform="";lk.classList.add("open")}catch(e){}
+setInert(false);
+d.body.style.overflow="";
+try{var pr=bgm.play();if(pr&&pr.catch)pr.catch(function(){})}catch(e){}
+setTimeout(function(){lk.hidden=true;lk.style.display="none";window.scrollTo(0,0);try{if(window.__onOpen)window.__onOpen()}catch(e){}},650);
+}
+var sy=null,dy=0;
+function down(y){sy=y;dy=0;lk.style.transition="none"}
+function move(y){if(sy===null)return;dy=Math.max(0,sy-y);lk.style.transform="translateY("+(-dy)+"px)"}
+function up(){if(sy===null)return;sy=null;lk.style.transition="";if(dy>60||dy<10)unlock();else lk.style.transform=""}
+function cancel(){sy=null;lk.style.transition="";lk.style.transform=""}
+if(window.PointerEvent){
+lk.addEventListener("pointerdown",function(e){down(e.clientY);try{lk.setPointerCapture(e.pointerId)}catch(x){}});
+lk.addEventListener("pointermove",function(e){move(e.clientY)});
+lk.addEventListener("pointerup",up);
+lk.addEventListener("pointercancel",cancel);
+}else{
+lk.addEventListener("touchstart",function(e){down(e.touches[0].clientY)},{passive:true});
+lk.addEventListener("touchmove",function(e){move(e.touches[0].clientY)},{passive:true});
+lk.addEventListener("touchend",up);
+lk.addEventListener("touchcancel",cancel);
+lk.addEventListener("mousedown",function(e){down(e.clientY)});
+d.addEventListener("mousemove",function(e){move(e.clientY)});
+d.addEventListener("mouseup",up);
+}
+lk.addEventListener("click",unlock);
+lk.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "||e.key==="ArrowUp"){e.preventDefault();unlock()}});
+try{lk.focus()}catch(e){}
+function mUi(){var on=!bgm.paused;mus.classList.toggle("on",on);mus.textContent=on?"🔊":"🎵";mus.setAttribute("aria-pressed",on);mus.setAttribute("aria-label",on?"Jeda musik":"Putar musik")}
+try{
+bgm.addEventListener("play",function(){mus.hidden=false;mUi()});
+bgm.addEventListener("pause",mUi);
+bgm.addEventListener("error",function(){mus.hidden=true});
+mus.addEventListener("click",function(){if(bgm.paused){var p=bgm.play();if(p&&p.catch)p.catch(function(){})}else bgm.pause()});
+d.addEventListener("visibilitychange",function(){if(d.hidden){wasOn=!bgm.paused;bgm.pause()}else if(wasOn){var p=bgm.play();if(p&&p.catch)p.catch(function(){})}});
+}catch(e){}
+window.__lock={unlock:unlock,label:label};
+})();
+</script>
+<script>
+/* ================== ISI KATA-KATAMU DI SINI ================== */
+var NAMA_DIA="Zuca";   /* nama dia */
+var NAMA_AKU="Okan";   /* nama si orang jelly (kamu), teman seperjalanan di cerita */
+var KEY_HIJAU=true;    /* true = latar hijau polos (#00FF00) pada gambar karakter dan cap dihapus otomatis. Aman kalau PNG-nya sudah transparan. */
+var BALIK_ZUCA=false;  /* true = gambar Zuca dibalik kiri-kanan */
+var BALIK_JELLY=false; /* true = gambar Okan dibalik kiri-kanan */
+function emojiOk(ch){try{var c=document.createElement("canvas").getContext("2d");c.font="32px sans-serif";var w1=c.measureText(ch).width,w2=c.measureText("􏿿").width;return w1>0&&Math.abs(w1-w2)>0.5}catch(e){return true}}
+var JF=emojiOk("🪼")?"🪼":"🐙"; /* emoji ubur-ubur; kalau HP belum mendukung, otomatis jadi gurita */
+var TEXT={
+lockTitle:"Gunung Permen Stroberi 🍓",
+lockSub:"Ada petualangan kecil khusus buat "+NAMA_DIA,
+startBtn:"Mulai mendaki 🍓",
+contBtn:"Lanjut mendaki 🍓",
+intro:NAMA_DIA+", ini petualangan kecil buat kamu. Lakukan kegiatan nyata hari ini, dan tiap kegiatan membuka satu bab cerita di peta. Pilihanmu mengubah ending!",
+endMain:"Sampai ketemu lagi, "+NAMA_DIA+". 💖",
+endSub:"Terima kasih sudah jadi sahabat terbaikku."
+};
+/* false = bab terbuka urut saja, tanpa menunggu jam. true = bab juga baru terbuka kalau jamnya sudah tiba.
+   Buat ngetes kapan saja: tambahkan #uji di ujung alamat web.
+   Buat menggeser titik bab di peta: ketuk judul di halaman peta 5 kali lalu pilih Atur titik (atau tambahkan #atur di ujung alamat web). */
+var KUNCI_JAM=false;
+/* ================== CERITA ================== */
+/* N = narasi, P = Okan si orang jelly (suara kamu), L = Ubi si ubur-ubur permen, K = dia (Zuca)
+   Syarat tampil (opsional): if:"flag"  no:"flag"  min:angka  max:angka  when:"pagi,siang,sore,malam"
+   Ekspresi (opsional): m:"senang"|"kaget" = ekspresi si pembicara; z:"..." / o:"..." = ekspresi Zuca / Okan (diam, bicara, senang, kaget)
+   Flag otomatis: "late" (datang telat >90 menit dari jam bab). */
+var AKU=NAMA_AKU;
+function N(t,o){return Object.assign({w:"N",t:t},o||{})}
+function P(t,o){return Object.assign({w:"P",t:t},o||{})}
+function L(t,o){return Object.assign({w:"L",t:t},o||{})}
+function K(t,o){return Object.assign({w:"K",t:t},o||{})}
+function C(a){return{ch:a}}
+var CH=[
+{t:"07.00",title:"Kaki Gunung",e:"🌄",task:"Bangun tanpa alarm, buka jendela, lalu kirim “selamat pagi” ke aku",bg:["#ffd9e8","#d8ecff"],deco:"🍓⛰️🍓🌸🍓",
+scene:[
+N("Fajar menyentuh kaki Gunung Permen Stroberi. Lerengnya merah muda berlapis krim, dan langit pagi biru muda seperti permen kapas."),
+N("Konon, di puncaknya hidup paus jelly raksasa dan ubur-ubur permen. Tapi cahaya manis gunung ini sudah lama padam, dan sembilan permata gulanya tertidur."),
+N("Kamu terbangun tepat saat matahari terbit. Gunung itu seolah sudah menunggumu.",{no:"late"}),
+N("Kamu datang agak siang, tapi gunung ini sabar menunggumu.",{if:"late"}),
+P("Hai, "+NAMA_DIA+"! Aku "+AKU+", si orang jelly penjaga kaki gunung. Dari tadi aku nungguin kamu.",{m:"senang"}),
+P("Sembilan permata gula di gunung ini padam. Kalau kamu bisa menyalakan semuanya, paus jelly di puncak akan bangun. Aku mau nemenin kamu naik."),
+K("Aku? Tapi aku bahkan nggak tahu harus mulai dari mana...",{m:"kaget"}),
+P("Tenang, kita cari bareng-bareng. Kamu nggak sendirian, aku sahabatmu, ingat?"),
+C([
+{t:"“Oke, ayo mulai! Aku siap!”",b:2,f:"berani",r:[P("Nah, itu semangat "+NAMA_DIA+" yang aku kenal.",{m:"senang"})]},
+{t:"“Aku deg-degan, tapi kamu temani ya?”",b:2,f:"percaya",r:[P("Selalu. Aku nggak ke mana-mana.")]},
+{t:"“Kasih aku waktu mikir dulu...”",b:1,r:[P("Santai aja. Kita jalan pelan-pelan.")]}
+])],
+reward:["🌅","Permata Fajar","Selamat pagi, "+NAMA_DIA+". Semoga harimu semanis gunung ini."]},
+{t:"08.30",title:"Ladang Rumput Permen",e:"🍭",task:"Sarapan santai: roti, nasi hangat, atau apa pun yang kamu suka (kalau ada stroberi, makin bagus!)",bg:["#ffd3de","#e3f1ff"],deco:"🍭🌱🍓🌷🍭",
+scene:[
+N("Kalian tiba di Ladang Rumput Permen. Rumputnya lembut seperti permen kapas, bunganya lolipop, dan di sana-sini tumbuh stroberi merah ranum."),
+N("Di tengah ladang, seekor ubur-ubur permen melayang pelan, berpendar biru dan pink. Cantik sekali."),
+N("Ia terlihat lemas. Matanya menatap stroberi di tanganmu."),
+C([
+{t:"Kasih stroberi paling besar ke ubur-ubur",b:2,f:"ubi",r:[L("Waaah, manis banget! Aku Ubi. Boleh ikut kalian?"),P("Dia suka kamu. Ubur-ubur itu pilih-pilih lho.",{m:"senang"})]},
+{t:"Bagi dua, kita makan bertiga",b:2,f:"ubi",r:[L("Makasih! Aku Ubi. Aku ikut kalian ya!"),P("Kamu selalu tahu caranya bikin suasana hangat.")]},
+{t:"Makan sendiri dulu, lapar banget",b:1,r:[N("Ubur-ubur itu mengangguk pelan dan tetap tersenyum."),P("Nggak apa-apa, kamu juga butuh tenaga.")]}
+])],
+reward:["🍓","Stroberi Semangat","Semoga perutmu selalu kenyang dan harimu semanis stroberi."]},
+{t:"09.30",title:"Sungai Soda",e:"🫧",task:"Jalan pagi atau olahraga ringan, lalu kabarin aku",bg:["#d7ecff","#efe3ff"],deco:"🫧🌊🫧🌿🫧",
+scene:[
+N("Di depan kalian mengalir Sungai Soda. Airnya bergelembung biru dan pink, berdesis seperti minuman manis."),
+L("Ayo ikut aku! Aku tahu jalan yang paling cantik!",{if:"ubi"}),
+P("Sepi juga ya kalau cuma berdua... tapi aku senang jalan bareng kamu.",{no:"ubi"}),
+N("Di tengah sungai, arusnya deras. Jembatan permen cuma selebar satu langkah, dan di bawahnya ada jurang gelap penuh gelembung."),
+C([
+{t:"Pegangan erat sama "+AKU+", lewati pelan-pelan",b:2,f:"pegangan",r:[P("Pegangan yang kuat ya, "+NAMA_DIA+". Aku di sebelahmu.")]},
+{t:"Lari kencang! Aku nggak takut!",b:1,r:[P("Hei, pelan-pelan! Aku hampir ketinggalan!",{m:"kaget"}),N("Kamu tertawa, dan gelembung soda ikut menari.",{z:"senang"})]},
+{t:"Cari jalan memutar yang aman",b:1,r:[P("Pintar. Aman itu nomor satu.")]}
+])],
+reward:["🫧","Gelembung Soda","Kirim satu foto langit atau jalan yang kamu lihat pagi ini, ya. Aku mau lihat."]},
+{t:"11.00",title:"Hutan Gula Kapas",e:"🍬",task:"Bersih-bersih kamar, cuci baju, dan jemur di bawah matahari",bg:["#e3e0ff","#ffe8f3"],deco:"🍬☁️🍬🌳🍬",
+scene:[
+N("Kalian masuk ke Hutan Gula Kapas. Pohon-pohonnya dari permen kapas, tapi sekarang lengket dan berantakan sampai jalannya tertutup."),
+P("Permata keempat tersembunyi di tengah hutan. Jalannya harus dibersihkan dulu supaya cahayanya muncul."),
+C([
+{t:"Bersihkan semuanya sampai rapi",b:2,f:"rajin",r:[N("Kapas-kapas lengket beterbangan menjadi awan kecil, dan hutan mulai berkilau.",{z:"senang"})]},
+{t:"Minta Ubi membantu dengan cahayanya",if:"ubi",b:2,r:[L("Serahkan padaku! Cling cling!"),N("Kapas lengket menghilang dalam sekejap, dan kalian bertiga tertawa.",{z:"senang",o:"senang"})]},
+{t:"Rapikan sedikit saja, sisanya nanti",b:1,r:[P("Pelan-pelan juga nggak apa-apa. Yang penting kamu mulai.")]}
+])],
+reward:["☁️","Kapas Tenang","Kamar rapi, kepala tenang. Kamu hebat banget, "+NAMA_DIA+"."]},
+{t:"12.30",title:"Bukit Stroberi dan Es Krim",e:"🍦",task:"Makan siang yang enak, dan tutup dengan es krim kalau bisa",bg:["#ffe0ec","#e3f1ff"],deco:"🍦🍨🍓🍧🍦",
+scene:[
+N("Perut keroncongan membawa kalian ke Bukit Stroberi: bukitnya tumpukan es krim, dan sungainya sirup stroberi."),
+P("Hari ini aku yang traktir. Pesan apa pun yang kamu suka.",{m:"senang"}),
+C([
+{t:"Es krim stroberi dua scoop, dong!",b:1,r:[P("Dua scoop, semangat dua kali lipat. Aku suka.")]},
+{t:"Satu es krim, kita makan berdua",b:2,f:"berdua",r:[N("Es krimnya meleleh pelan, dan kalian tertawa karena sama-sama belepotan.",{z:"senang",o:"senang"})]},
+{t:"Pesankan satu untuk Ubi juga",if:"ubi",b:2,r:[L("Yeay! Kamu ingat aku!")]}
+])],
+reward:["🍦","Voucher Es Krim","Berlaku 1x: aku traktir es krim favoritmu."]},
+{t:"14.00",title:"Awan Marshmallow",e:"☁️",task:"Nonton anime atau film favorit sambil rebahan",bg:["#e4f1ff","#fff0f7"],deco:"☁️🌙☁️⭐☁️",
+scene:[
+N("Siang itu semuanya berhenti. Kalian naik ke Awan Marshmallow yang empuk, dan angin berayun pelan seperti ayunan."),
+P("Di sini boleh bermalas-malasan. Itu aturan resmi gunung ini."),
+N("Kamu mulai mengantuk, dan itu wajar.",{when:"siang"}),
+C([
+{t:"Ceritakan mimpi terbesarku: paus besar",b:2,f:"mimpi",r:[P("Paus besar... mimpi yang indah. Aku simpan baik-baik, suatu hari kita wujudkan bareng.")]},
+{t:"Diam dan nikmati awan",b:1,r:[N("Awan berbentuk ubur-ubur lewat, lalu berbentuk stroberi.")]},
+{t:"Tanya balik: “Mimpimu apa?”",b:2,f:"rahasia",r:[P("Hmm... mimpiku sederhana. Lihat sahabatku tersenyum tiap hari, dan mimpinya jadi kenyataan."),N("Pipimu menghangat.",{z:"senang"})]}
+])],
+reward:["🎶","Lagu Rekomendasi","Kirim satu lagu atau judul anime favoritmu. Aku mau ikut dengar dan nonton."]},
+{t:"16.00",title:"Gua Kristal Gula",e:"💎",task:"Waktu hobi: menggambar, baca manga, atau main santai",bg:["#ffe6f0","#e6efff"],deco:"💎🎨💎✨💎",
+scene:[
+N("Di dalam Gua Kristal Gula, dinding-dindingnya berkilau seperti permata. Satu dinding masih polos dan licin, siap diisi dengan namamu."),
+P("Isi dengan apa pun yang kamu suka. Menggambar, menulis, atau membaca."),
+C([
+{t:"Tulis janji persahabatan kita berdua",b:2,f:"janji",r:[N("Tulisan emas muncul sendiri di kristal itu. Janji itu terukir di dalam gunung."),P("Aku akan jaga janji itu.")]},
+{t:"Gambar paus besar impianku",b:2,f:"paus",r:[N("Gambarmu bergerak pelan, seekor paus jelly besar berenang di dinding kristal."),P("Keren banget! Mimpimu kelihatan nyata.",{m:"senang"})]},
+{t:"Baca dongeng yang ada di sana",b:1,r:[L("Ceritain juga ke akuu!",{if:"ubi"}),N("Halaman demi halaman membawamu pergi jauh.",{no:"ubi"})]}
+])],
+reward:["💌","Surat Kecil","Aku bangga sama kamu. Terus berkarya ya."]},
+{t:"17.30",title:"Lereng Senja",e:"🌇",task:"Jalan sore, jajan camilan, lalu lihat senja",bg:["#ffd0e2","#ffe9d6"],deco:"🌇🌸🌇🍓🌇",
+scene:[
+N("Senja jatuh di Lereng Senja. Seluruh gunung berkilau merah muda seperti permen, dan aroma camilan manis memenuhi udara."),
+P("Aku masih ingat janji di gua tadi.",{if:"janji"}),
+L("Jajan! Aku mau yang rasa stroberi!",{if:"ubi"}),
+C([
+{t:"Beli satu camilan buat dibagi berdua",b:2,f:"berdua",r:[P("Seru. Jajan bareng kamu selalu lebih enak.")]},
+{t:"Lepas lentera apung sambil berharap",b:2,f:"harapan",r:[N("Lentera mengapung pelan ke langit, membawa harapanmu ke antara bintang-bintang pertama.")]},
+{t:"Foto senja buat kenang-kenangan",b:1,r:[P("Kirim ke aku juga, ya.")]}
+])],
+reward:["🎐","Lonceng Senja","Semoga harimu selalu sejuk dan damai."]},
+{t:"19.00",title:"Puncak Paus Jelly",e:"🐋",task:"Mandi, siapin keperluan besok, lalu tulis 3 hal yang bikin hari ini spesial",bg:["#b9d8ff","#ffd6ec"],deco:"✨🐋✨🍓✨",end:true,
+scene:[
+N("Malam turun di puncak. Sembilan permata gula melayang dan berkumpul di atas danau jelly yang tenang."),
+N("Kamu datang tepat waktu, dan permatanya bersinar lebih terang.",{no:"late"}),
+P("Tinggal satu hal: menyalakan mereka semua. Itu cuma bisa dilakukan seseorang yang berani bermimpi besar."),
+P("Aku percaya padamu, "+NAMA_DIA+".",{min:12,m:"senang"}),
+P("Apa pun hasilnya, aku senang kita sampai sejauh ini.",{max:6}),
+C([
+{t:"Genggam permata dan berharap bersama "+AKU,b:2,r:[N("Cahaya hangat mengalir dari tanganmu.")]},
+{t:"Nyalakan sendiri dengan sepenuh hati",b:1,r:[N("Kamu memejamkan mata dan percaya.")]},
+{t:"Serahkan pada Ubi",if:"ubi",b:1,r:[L("Baiklah! Aku bantu sekuat tenaga!")]}
+])],
+reward:["🗝️","Kunci Puncak","Kamu sudah menyalakan semuanya. Terima kasih sudah menemaniku seharian, sahabatku."]}
+];
+var ENDS=[
+{id:"paus",name:"Paus Jelly Impian",hid:true,hint:"Ending rahasia",ok:function(){return F.ubi&&F.janji&&(F.mimpi||F.paus)&&S.bond>=12&&S.tepat>=5},
+nodes:function(){return[N("Permata terakhir menyala, dan dari danau jelly di puncak, seekor paus raksasa terbang naik ke langit. Besar, lembut, berwarna pink, dan bercahaya dari dalam.",{z:"kaget"}),N("Paus itu menyapa dengan nyanyian panjang, seolah sudah lama menunggu "+NAMA_DIA+".",{z:"senang"}),P("Itu mimpimu, "+NAMA_DIA+". Besar, indah, dan nyata. Aku bangga jadi sahabatmu.",{m:"senang"}),K("Ini... beneran paus jelly impianku?",{m:"kaget"}),L("Hiks, aku terharu...",{if:"ubi"}),N("Ending Rahasia: Paus Jelly Impian 🐋",{z:"senang",o:"senang"})]}},
+{id:"penuh",name:"Gunung Penuh Cahaya",hint:"Dekat sekali dengan sahabatmu",ok:function(){return S.bond>=12},
+nodes:function(){return[N("Seluruh gunung menyala kembali. Ladang, sungai soda, dan hutan kapas berkilau seperti langit penuh bintang yang jatuh ke bumi.",{z:"senang"}),P("Kamu berhasil, "+NAMA_DIA+". Terima kasih sudah percaya sama aku.",{m:"senang"}),N("Ending: Gunung Penuh Cahaya 🍓",{o:"senang"})]}},
+{id:"hangat",name:"Lereng Hangat",hint:"Cukup dekat dengan sahabatmu",ok:function(){return S.bond>=7},
+nodes:function(){return[N("Lereng gunung menyala pelan dan hangat. Tidak semua permata bersinar, tapi cukup untuk menerangi jalan turun."),P("Besok kita cari sisanya bareng-bareng, ya."),N("Ending: Lereng Hangat 🕯️")]}},
+{id:"baru",name:"Awal Pendakian Baru",hint:"Mulai dengan pilihan lain",ok:function(){return true},
+nodes:function(){return[N("Gunung menyala redup, seperti baru terbangun. Pendakianmu belum selesai, dan itu bukan hal buruk."),P("Masih banyak hari untuk kita coba lagi. Aku akan selalu menunggu di sini."),N("Ending: Awal Pendakian Baru 🌙")]}}
+];
+/* ================== SELESAI. Di bawah ini jangan diubah kalau nggak yakin ================== */
+var $=function(id){return document.getElementById(id)};
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function rnd(n){return Math.floor(Math.random()*n)}
+if(!KEY_HIJAU)document.documentElement.classList.add("nokey");
+document.querySelector(".lk-title").textContent=TEXT.lockTitle;
+document.querySelector(".lk-sub").textContent=TEXT.lockSub;
+$("intro").textContent=TEXT.intro;$("endm").textContent=TEXT.endMain;$("ends").textContent=TEXT.endSub;
+var UJI=location.hash==="#uji",ATUR=location.hash==="#atur";if(UJI)$("uji").hidden=false;
+var K1="gp-state",K2="gp-perm",KP="gp-peta2",today=new Date().toDateString();
+var S={day:today,done:[],bond:0,F:{},tepat:0,ending:null,cap:null},PM={ends:[],sfx:true};
+try{PM=Object.assign(PM,JSON.parse(localStorage.getItem(K2)||"{}"))}catch(e){}
+try{var _s=JSON.parse(localStorage.getItem(K1)||"null");if(_s&&_s.day===today)S=Object.assign(S,_s)}catch(e){}
+var F=S.F;
+function save(){try{S.F=F;localStorage.setItem(K1,JSON.stringify(S))}catch(e){}}
+function savePM(){try{localStorage.setItem(K2,JSON.stringify(PM))}catch(e){}}
+function isDone(i){return S.done.indexOf(i)>-1}
+function allDone(){return S.done.length>=CH.length}
+function startMin(i){var m=/^(\d{1,2})[.:](\d{2})/.exec(CH[i].t);return m?(+m[1])*60+(+m[2]):0}
+function nowMin(){var d=new Date();return d.getHours()*60+d.getMinutes()}
+function part(){var h=new Date().getHours();return h<11?"pagi":(h<15?"siang":(h<18?"sore":"malam"))}
+function timeOk(i){return UJI||!KUNCI_JAM||nowMin()>=startMin(i)}
+function prevOk(i){return UJI||i===0||isDone(i-1)}
+function curIdx(){for(var i=0;i<CH.length;i++){if(!isDone(i))return i}return CH.length}
+function remain(i){var r=Math.max(1,startMin(i)-nowMin()),h=Math.floor(r/60),m=r%60;return(h?h+" jam ":"")+(m?m+" menit":"")}
+function cstate(i){if(isDone(i))return"done";if(!prevOk(i))return"prev";if(!timeOk(i))return"time";return"open"}
+function bgFile(i){return("0"+(i+1)).slice(-2)+".jpg"}
+/* suara & getar */
+var AC=null;
+function ac(){if(!AC){var C2=window.AudioContext||window.webkitAudioContext;if(C2)AC=new C2()}if(AC&&AC.state==="suspended")AC.resume();return AC}
+function beep(f,t,d,type,v){var a=ac();if(!a)return;var o=a.createOscillator(),g=a.createGain();o.type=type||"sine";o.frequency.value=f;var s=a.currentTime+t;g.gain.setValueAtTime(0.0001,s);g.gain.exponentialRampToValueAtTime(v||0.12,s+0.01);g.gain.exponentialRampToValueAtTime(0.0001,s+d);o.connect(g);g.connect(a.destination);o.start(s);o.stop(s+d+0.02)}
+function sfx(k){
+if(!PM.sfx)return;
+if(k==="tap")beep(660,0,.06,"triangle");
+else if(k==="ch")[523,784].forEach(function(f,i){beep(f,i*.08,.2,"triangle")});
+else if(k==="up")[659,880,1175].forEach(function(f,i){beep(f,i*.08,.25,"sine",.1)});
+else if(k==="win")[523,659,784,1047].forEach(function(f,i){beep(f,i*.1,.25,"triangle")});
+else if(k==="fan")[523,659,784,1047,1319].forEach(function(f,i){beep(f,i*.12,.4,"triangle")});
+}
+function buzz(p){if(PM.sfx&&navigator.vibrate){try{navigator.vibrate(p)}catch(e){}}}
+function sfxUi(){$("sfxb").textContent=PM.sfx?"🔔":"🔕";$("sfxb").setAttribute("aria-label",PM.sfx?"Matikan efek suara":"Nyalakan efek suara")}
+$("sfxb").addEventListener("click",function(){PM.sfx=!PM.sfx;savePM();sfxUi();if(PM.sfx)sfx("tap")});
+sfxUi();
+/* bintang dekor */
+(function(){var h="",c=["✦","◦","•","✧","○"];for(var i=0;i<34;i++)h+='<i style="left:'+rnd(100)+'%;top:'+rnd(100)+'%;font-size:'+(8+rnd(12))+'px;animation-delay:'+(rnd(30)/10)+'s">'+c[i%5]+'</i>';$("sp").innerHTML=h})();
+/* modal */
+function modal(html,btns){
+$("mc").innerHTML=html;var mb=$("mb");mb.innerHTML="";
+btns.forEach(function(x){var b=document.createElement("button");b.type="button";b.className="nav"+(x.alt?" alt":"");b.textContent=x.t;b.addEventListener("click",x.f);mb.appendChild(b)});
+$("mv").hidden=false;document.body.style.overflow="hidden";mb.firstChild.focus();
+}
+function closeModal(){$("mv").hidden=true;if($("stg").hidden)document.body.style.overflow=""}
+/* ===== peta ===== */
+/* titik 9 bab sesuai gambar peta.jpg: rumah permen, ladang lolipop, jembatan sungai soda, hutan kapas, bukit es krim, awan marshmallow, gua kristal, lereng senja, danau puncak */
+var PTD=[[50,88],[80,78],[30,67],[73,55],[30,46],[70,42],[34,33],[66,21],[50,16.5]];
+var PT=PTD.map(function(p){return p.slice()});
+try{var sp0=JSON.parse(localStorage.getItem(KP)||"null");if(sp0&&sp0.length===CH.length&&sp0.every(function(p){return p&&p.length===2&&isFinite(p[0])&&isFinite(p[1])}))PT=sp0}catch(e){}
+var mapi=$("mapi"),mimg=$("mapimg"),mk=[];
+function drawPath(){$("mpl").setAttribute("points",PT.map(function(p){return p[0]+","+p[1]}).join(" "))}
+function mapState(){var ok=mimg.complete&&mimg.naturalWidth>0;mapi.classList.toggle("nomap",!ok);if(ok)mapi.style.paddingTop=(mimg.naturalHeight/mimg.naturalWidth*100)+"%"}
+mimg.addEventListener("load",mapState);mimg.addEventListener("error",mapState);
+if(mimg.complete)mapState();
+CH.forEach(function(c,i){
+var b=document.createElement("button");b.type="button";b.className="mk";
+b.style.left=PT[i][0]+"%";b.style.top=PT[i][1]+"%";
+b.innerHTML='<span class="mn"></span><span class="mb2" hidden></span><span class="ml"></span>';
+b.addEventListener("click",function(){if(ATUR)return;tapCh(i)});
+mapi.appendChild(b);mk.push(b);
+});
+drawPath();
+function savePT(){try{localStorage.setItem(KP,JSON.stringify(PT))}catch(e){}}
+/* ketuk judul 5x untuk membuka menu pembuat: cek gambar / atur titik peta */
+function cekGambar(){
+var L=[];for(var i=1;i<=9;i++)L.push(("0"+i).slice(-2)+".jpg");
+L.push("peta.jpg","lockscreen.jpg","cap.png");
+["zuca","jelly"].forEach(function(n){["diam","bicara","senang","kaget"].forEach(function(m){L.push(n+"-"+m+".png")})});
+var addr="";try{addr=decodeURI(location.href.split("#")[0])}catch(e){addr=location.href.split("#")[0]}
+modal('<div class="dd"><p class="dtt">Cek gambar</p><p class="dq" id="ckp">Memeriksa...</p><div id="ckl" style="text-align:left;font-size:.85rem;line-height:1.7"></div><p class="dq" style="font-size:.75rem;word-break:break-all">Alamat web ini:<br>'+esc(addr)+'</p></div>',[{t:"Tutup",alt:true,f:closeModal}]);
+var rows={},n=0;
+function fin(){
+n++;if(n<L.length)return;
+var ok=0,h="";L.forEach(function(f){if(rows[f])ok++;h+=(rows[f]?"✅ ":"❌ ")+f+"<br>"});
+$("ckl").innerHTML=h;
+$("ckp").textContent=ok===L.length?"Semua "+L.length+" gambar kebaca ✅":(ok===0?"Tidak ada gambar yang kebaca. Biasanya karena file web ini tidak satu folder dengan gambarnya, atau dibuka dari pratinjau.":ok+" dari "+L.length+" gambar kebaca. Yang ❌ biasanya salah nama atau salah huruf besar-kecil.");
+}
+L.forEach(function(f){var im=new Image();im.onload=function(){rows[f]=1;fin()};im.onerror=function(){rows[f]=0;fin()};im.src=f});
+}
+function menuPembuat(){
+modal('<div class="dd"><p class="dtt">Menu pembuat</p><p class="dq">Alat bantu buat ngecek dan merapikan web ini.</p></div>',[
+{t:"🔍 Cek gambar",f:function(){closeModal();cekGambar()}},
+{t:"📍 Atur titik di peta",f:function(){closeModal();try{location.hash="#atur"}catch(e){}location.reload()}},
+{t:"Tutup",alt:true,f:closeModal}]);
+}
+(function(){var n=0,t=null;document.querySelector("#hm h1").addEventListener("click",function(){n++;clearTimeout(t);t=setTimeout(function(){n=0},1500);if(n>=5){n=0;menuPembuat()}})})();
+function nowText(){
+if(ATUR)return"";
+if(S.cap)return"🌙 Pendakian hari ini sudah dicap. Sampai besok, "+NAMA_DIA+"!";
+if(allDone())return"🐋 Semua permata menyala! Ketuk titik puncak untuk lihat ending.";
+var c=curIdx();
+if(!timeOk(c))return"⏳ Bab "+(c+1)+" dimulai jam "+CH[c].t+" ("+remain(c)+" lagi)";
+return"📖 Bab "+(c+1)+" siap! Lakukan misi nyatanya, lalu ketuk titik berkedip di peta.";
+}
+function refresh(){
+var c=curIdx();
+$("cBond").textContent="💖 "+S.bond;$("cLight").textContent="🍬 "+S.done.length+"/"+CH.length;
+$("now").textContent=nowText();
+CH.forEach(function(ch,i){
+var st=ATUR?"open":cstate(i),b=mk[i],vis=ATUR||i<=c+1||isDone(i);
+var cls="mk"+(st==="done"?" done":"")+(st==="open"?" open":"")+((st==="prev"||st==="time")?" lk0":"")+(vis?"":" hid");
+if(ATUR)cls="mk open";
+b.className=cls;
+var n=b.querySelector(".mn"),bub=b.querySelector(".mb2"),lab=b.querySelector(".ml");
+n.textContent=!vis?"?":(st==="done"?"✓":(st==="prev"?"🔒":(st==="time"?"⏳":(i+1))));
+if(ATUR)n.textContent=i+1;
+lab.textContent=vis?ch.title:"";
+bub.hidden=ATUR||!(i===c&&(st==="open"||st==="time")&&!S.cap);
+bub.textContent=st==="open"?"Mulai di sini ✨":"⏳ "+ch.t;
+var t3=st==="done"?"selesai":(st==="open"?"siap dibaca":(st==="time"?"terbuka jam "+ch.t:"terkunci, selesaikan Bab "+i+" dulu"));
+b.setAttribute("aria-label","Bab "+(i+1)+": "+(vis?ch.title:"tertutup")+", "+t3);
+});
+}
+setInterval(refresh,20000);
+function focusNow(){
+if(ATUR||UJI)return;
+try{var c=Math.min(curIdx(),CH.length-1);mk[c].scrollIntoView({block:"center",behavior:"smooth"})}catch(e){}
+}
+window.__onOpen=function(){setTimeout(focusNow,150)};
+function rewHtml(i){var r=CH[i].reward;return'<p class="dk">PERMATA #'+(i+1)+'</p><p class="dm"><b>'+r[0]+'</b></p><p class="dtt">'+esc(r[1])+'</p><p class="dq">'+esc(r[2])+'</p>'}
+function banner(i){return'<img class="ban" src="'+bgFile(i)+'" alt="" onerror="this.remove()">'}
+function tapCh(i){
+if(ATUR)return;
+sfx("tap");var st=cstate(i),c=CH[i];
+if(st==="done"){
+if(allDone()&&i===CH.length-1){modal('<div class="dd">'+rewHtml(i)+'</div>',[{t:"Lihat ending dan cap 🐋",f:function(){closeModal();showFin()}},{t:"Tutup",alt:true,f:closeModal}]);return}
+modal('<div class="dd">'+banner(i)+rewHtml(i)+'</div>',[{t:"Tutup",alt:true,f:closeModal}]);return}
+if(st==="prev"){modal('<div class="dd"><p class="dk">BAB '+(i+1)+'</p><p class="dm"><b>🔒</b></p><p class="dq">Selesaikan Bab '+i+' dulu ya.</p></div>',[{t:"Tutup",alt:true,f:closeModal}]);return}
+if(st==="time"){modal('<div class="dd"><p class="dk">BAB '+(i+1)+'</p><p class="dtt">'+esc(c.title)+'</p><p class="dm"><b>⏳</b></p><p class="dq">Bab ini terbuka jam '+c.t+' ('+remain(i)+' lagi).</p></div>',[{t:"Tutup",alt:true,f:closeModal}]);return}
+modal('<div class="dd">'+banner(i)+'<p class="dk">BAB '+(i+1)+' · '+c.t+'</p><p class="dtt">'+esc(c.title)+'</p><p class="dm"><b>'+c.e+'</b></p><p class="dp"><b>Misi nyata hari ini:</b><br>'+esc(c.task)+'</p></div>',
+[{t:"Sudah kulakukan, lanjutkan cerita ✨",f:function(){closeModal();startCh(i)}},{t:"Belum, nanti dulu",alt:true,f:closeModal}]);
+}
+/* mode atur titik di peta (#atur) */
+if(ATUR){
+var drag=-1;
+mk.forEach(function(b,i){
+b.style.touchAction="none";
+b.addEventListener("pointerdown",function(e){e.preventDefault();drag=i;try{b.setPointerCapture(e.pointerId)}catch(x){}});
+b.addEventListener("pointermove",function(e){
+if(drag!==i)return;
+var r=mapi.getBoundingClientRect();
+var x=Math.max(3,Math.min(97,(e.clientX-r.left)/r.width*100)),y=Math.max(3,Math.min(97,(e.clientY-r.top)/r.height*100));
+PT[i]=[Math.round(x*10)/10,Math.round(y*10)/10];
+b.style.left=PT[i][0]+"%";b.style.top=PT[i][1]+"%";drawPath();
+});
+function end(){if(drag===i){drag=-1;savePT()}}
+b.addEventListener("pointerup",end);b.addEventListener("pointercancel",end);
+});
+$("hudn").hidden=true;$("huda").hidden=false;
+$("aLihat").addEventListener("click",function(){
+modal('<div class="dd"><p class="dtt">Posisi titik</p><p class="dq">Salin angka ini dan kirim ke aku kalau mau dipasang permanen.</p><textarea class="ta" id="ta" readonly></textarea></div>',[{t:"Tutup",alt:true,f:closeModal}]);
+$("ta").value=JSON.stringify(PT);
+try{$("ta").focus();$("ta").select()}catch(e){}
+});
+$("aReset").addEventListener("click",function(){
+PT=PTD.map(function(p){return p.slice()});
+mk.forEach(function(b,i){b.style.left=PT[i][0]+"%";b.style.top=PT[i][1]+"%"});
+drawPath();try{localStorage.removeItem(KP)}catch(e){}
+});
+$("aSelesai").addEventListener("click",function(){try{history.replaceState(null,"",location.pathname+location.search)}catch(e){}location.reload()});
+}
+/* ===== mesin cerita ===== */
+var ST={ci:-1,q:[],i:0,typing:false,tw:null,fl:null,cb:null,full:"",snap:null,ended:false,choosing:false};
+var META={N:{n:""},P:{n:AKU},L:{n:"Ubi"},K:{n:NAMA_DIA}};
+var SPR={z:"zuca",o:"jelly"};
+$("ubi").textContent=JF;
+if(BALIK_ZUCA)$("pme").classList.add("flip");
+if(BALIK_JELLY)$("plu").classList.add("flip");
+var RM=window.matchMedia&&matchMedia("(prefers-reduced-motion:reduce)").matches;
+/* gambar karakter: diam, bicara, senang, kaget. Kalau gambarnya belum ada, otomatis pakai emoji. */
+(function(){["zuca","jelly"].forEach(function(n){["diam","bicara","senang","kaget"].forEach(function(m){var im=new Image();im.src=n+"-"+m+".png"})})})();
+function loadSpr(w,mood){
+var im=$(w==="z"?"imz":"imo"),box=$(w==="z"?"pme":"plu");
+if(im._m===mood)return;
+im._m=mood;
+im.onload=function(){box.classList.add("ok");box.classList.remove("bad")};
+im.onerror=function(){
+if(mood!=="diam"){im._m=null;loadSpr(w,"diam")}
+else{box.classList.add("bad");box.classList.remove("ok")}
+};
+im.src=SPR[w]+"-"+mood+".png";
+}
+function spkOf(n){return n.w==="K"?"z":(n.w==="P"?"o":null)}
+function moodsOf(n){var m={z:"diam",o:"diam"},sp=spkOf(n);if(n.z)m.z=n.z;if(n.o)m.o=n.o;if(sp&&n.m)m[sp]=n.m;return m}
+function cond(n){
+if(n.if&&!F[n.if])return false;
+if(n.no&&F[n.no])return false;
+if(n.min!=null&&S.bond<n.min)return false;
+if(n.max!=null&&S.bond>n.max)return false;
+if(n.when&&n.when.split(",").indexOf(part())<0)return false;
+return true;
+}
+function startCh(ci){
+var c=CH[ci];
+ST.ci=ci;ST.q=c.scene.slice();ST.i=0;ST.ended=false;ST.choosing=false;
+ST.snap={bond:S.bond,F:Object.assign({},F),tepat:S.tepat};
+var late=!UJI&&(nowMin()-startMin(ci)>90);
+if(late)F.late=true;else delete F.late;
+if(!late)S.tepat++;
+var scn=$("scn");
+scn.classList.remove("hasbg");
+scn.style.setProperty("--b1",c.bg[0]);scn.style.setProperty("--b2",c.bg[1]);
+scn.style.background="url("+bgFile(ci)+") center/cover no-repeat,linear-gradient("+c.bg[0]+","+c.bg[1]+")";
+var pi=new Image();pi.onload=function(){if(ST.ci===ci)scn.classList.add("hasbg")};pi.src=bgFile(ci);
+$("sc").textContent=c.deco;$("sh").textContent=c.e;
+$("ubi").hidden=!F.ubi;
+$("sb").textContent="💖 "+S.bond;
+$("stg").hidden=false;document.body.style.overflow="hidden";
+$("chs").hidden=true;$("dtx").textContent="";$("dnm").hidden=true;
+loadSpr("z","diam");loadSpr("o","diam");
+sfx("up");next();$("dlg").focus();
+}
+function tg(el,c){el.classList.remove("on");el.classList.remove("dim");if(c)el.classList.add(c)}
+function por(w){
+tg($("pme"),w==="K"?"on":(w==="P"||w==="L"?"dim":""));
+tg($("plu"),w==="P"?"on":(w==="K"||w==="L"?"dim":""));
+tg($("ubi"),w==="L"?"on":(w==="K"||w==="P"?"dim":""));
+}
+function stopFlap(){clearInterval(ST.fl);ST.fl=null}
+function typeText(t,cb){
+clearInterval(ST.tw);ST.full=t;ST.typing=true;ST.cb=cb;$("dnx").hidden=true;
+function fin(){clearInterval(ST.tw);ST.typing=false;$("dnx").hidden=false;var f=ST.cb;ST.cb=null;if(f)f()}
+ST.fin=fin;
+if(RM){$("dtx").textContent=t;fin();return}
+var k=0;$("dtx").textContent="";
+ST.tw=setInterval(function(){k+=2;$("dtx").textContent=t.slice(0,k);if(k>=t.length)fin()},24);
+}
+function showNode(n){
+var m=META[n.w];
+$("dnm").textContent=m.n;$("dnm").hidden=!m.n;$("dnm").className="dnm "+n.w;
+$("dtx").className="dtx"+(n.w==="N"?" nar":"");
+por(n.w);stopFlap();
+var mo=moodsOf(n),sp=spkOf(n);
+loadSpr("z",mo.z);loadSpr("o",mo.o);
+var flap=sp&&!n.m&&!n[sp]&&!RM;
+if(flap){loadSpr(sp,"bicara");var t=1;ST.fl=setInterval(function(){t^=1;loadSpr(sp,t?"bicara":"diam")},170)}
+typeText(n.t,function(){stopFlap();var m2=moodsOf(n);loadSpr("z",m2.z);loadSpr("o",m2.o)});
+}
+function next(){
+$("chs").hidden=true;
+while(true){
+if(ST.i>=ST.q.length){
+var c=CH[ST.ci];
+if(c.end&&!ST.ended){
+ST.ended=true;
+var e=ENDS.filter(function(x){return x.ok()})[0];
+S.ending=e.id;if(PM.ends.indexOf(e.id)<0){PM.ends.push(e.id);savePM()}
+ST.q=e.nodes();ST.i=0;sfx("fan");buzz([60,40,60,40,120]);continue;
+}
+finishCh();return;
+}
+var n=ST.q[ST.i++];
+if(!cond(n))continue;
+if(n.ch){showChoice(n);return}
+showNode(n);return;
+}
+}
+function showChoice(n){
+ST.choosing=true;por("K");stopFlap();loadSpr("z","diam");loadSpr("o","diam");
+$("dnm").hidden=true;$("dtx").className="dtx nar";$("dtx").textContent="Apa yang kamu pilih?";$("dnx").hidden=true;
+var box=$("chs");box.innerHTML="";box.hidden=false;
+n.ch.filter(cond).forEach(function(o){
+var b=document.createElement("button");b.type="button";b.className="cbtn";b.textContent=o.t;
+b.addEventListener("click",function(e){
+e.stopPropagation();
+S.bond+=o.b||0;if(o.f)F[o.f]=true;
+$("sb").textContent="💖 "+S.bond;
+if(o.b){var f=document.createElement("div");f.className="bf";f.textContent="💖 +"+o.b;document.body.appendChild(f);setTimeout(function(){f.remove()},1500)}
+sfx("ch");buzz(40);
+ST.choosing=false;
+var r=(o.r||[]).slice();ST.q.splice.apply(ST.q,[ST.i,0].concat(r));
+if(o.f==="ubi")$("ubi").hidden=false;
+next();
+});
+box.appendChild(b);
+});
+box.firstChild.focus();
+}
+function advance(){
+if(ST.choosing||$("stg").hidden)return;
+if(ST.typing){$("dtx").textContent=ST.full;if(ST.fin)ST.fin();return}
+sfx("tap");next();
+}
+$("dlg").addEventListener("click",advance);
+$("dlg").addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();advance()}});
+$("scn").addEventListener("click",function(e){if(e.target.id==="scn"||e.target.tagName==="IMG"||e.target.className.indexOf("por")>-1||e.target.id==="sc"||e.target.id==="sh")advance()});
+function closeStory(){clearInterval(ST.tw);stopFlap();ST.typing=false;ST.cb=null;$("stg").hidden=true;document.body.style.overflow=""}
+$("sx").addEventListener("click",function(e){
+e.stopPropagation();
+S.bond=ST.snap.bond;S.tepat=ST.snap.tepat;Object.keys(F).forEach(function(k){delete F[k]});Object.assign(F,ST.snap.F);
+closeStory();refresh();
+});
+function finishCh(){
+var ci=ST.ci;
+if(!isDone(ci))S.done.push(ci);
+save();closeStory();refresh();sfx("win");buzz([40,30,80]);burst();
+var all=allDone();
+var btns=all?[{t:"Menuju puncak 🐋",f:function(){closeModal();showFin()}},{t:"Nanti dulu",alt:true,f:closeModal}]:[{t:"Simpan ke jurnal ▶",f:closeModal}];
+modal('<div class="dd">'+rewHtml(ci)+'</div>',btns);
+}
+/* jurnal */
+$("bJur").addEventListener("click",function(){
+sfx("tap");
+var h='<p class="jh">Jurnal Permata</p>';
+CH.forEach(function(c,i){h+=isDone(i)?'<div class="jl"><b>'+c.reward[0]+' '+esc(c.reward[1])+'</b><span>'+esc(c.reward[2])+'</span></div>':'<div class="jl no"><b>❓ Permata #'+(i+1)+'</b><span>Belum didapat</span></div>'});
+h+='<p class="jh">Ending ditemukan: '+PM.ends.length+'/'+ENDS.length+'</p>';
+ENDS.forEach(function(e){h+=PM.ends.indexOf(e.id)>-1?'<div class="jl"><b>🏆 '+esc(e.name)+'</b></div>':'<div class="jl no"><b>❓ ???</b><span>'+esc(e.hint)+'</span></div>'});
+modal(h,[{t:"Tutup",alt:true,f:closeModal}]);
+});
+/* gerbang & cap */
+function burst(){
+if(RM)return;
+var e=["🍬","🍓","🫧","💖","✨"];
+for(var i=0;i<16;i++){
+var s=document.createElement("span");s.className="cf";s.textContent=e[i%e.length];
+s.style.left=(30+Math.random()*40)+"%";s.style.top="45%";
+s.style.setProperty("--dx",(Math.random()*240-120)+"px");s.style.setProperty("--dy",(Math.random()*-260-40)+"px");
+document.body.appendChild(s);setTimeout(function(x){x.remove()},1600,s);
+}
+}
+function endObj(){return ENDS.filter(function(x){return x.id===S.ending})[0]||ENDS[ENDS.length-1]}
+var capImg=$("capimg");
+function capState(){$("stamp").classList.toggle("hasimg",!!(capImg.complete&&capImg.naturalWidth>0))}
+capImg.addEventListener("load",capState);capImg.addEventListener("error",capState);
+if(capImg.complete)capState();
+function showFin(){
+var e=endObj();
+$("endc").innerHTML='<small>Ending yang kamu dapat</small><b>'+esc(e.name)+'</b><small>Ending ditemukan: '+PM.ends.length+'/'+ENDS.length+' · Kedekatan 💖 '+S.bond+'</small>';
+if(S.cap)showStamp(false,S.cap);
+$("hm").hidden=true;$("fin").hidden=false;$("hud").hidden=true;window.scrollTo(0,0);
+}
+function showStamp(anim,d){
+$("sdate").textContent=d;$("stc").textContent=endObj().name;
+$("stcap").textContent="Pendakian Selesai 🍓 · "+endObj().name+" · "+d;
+capState();
+$("stcap").hidden=!$("stamp").classList.contains("hasimg");
+$("ph").hidden=true;$("stamp").hidden=false;if(anim){$("stamp").classList.add("hit");burst()}
+$("bye").hidden=false;$("press").hidden=true;
+}
+capImg.addEventListener("load",function(){if(!$("stamp").hidden)$("stcap").hidden=false});
+$("press").addEventListener("click",function(){
+if(S.cap||!allDone())return;
+S.cap=new Date().toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"});
+save();sfx("fan");buzz([60,40,60,40,120]);showStamp(true,S.cap);refresh();
+});
+$("back").addEventListener("click",function(){$("fin").hidden=true;$("hm").hidden=false;$("hud").hidden=false;window.scrollTo(0,0);refresh()});
+$("again").addEventListener("click",function(){
+modal('<div class="dd"><p class="dm"><b>🔁</b></p><p class="dq">Mulai ulang pendakian hari ini dari Bab 1? Ending yang sudah kamu temukan tetap tersimpan.</p></div>',
+[{t:"Ya, ulangi pendakian",f:function(){
+S={day:today,done:[],bond:0,F:{},tepat:0,ending:null,cap:null};F=S.F;save();
+$("stamp").hidden=true;$("stamp").classList.remove("hit");$("stcap").hidden=true;$("ph").hidden=false;$("bye").hidden=true;$("press").hidden=false;
+closeModal();$("fin").hidden=true;$("hm").hidden=false;$("hud").hidden=false;window.scrollTo(0,0);refresh();
+}},{t:"Batal",alt:true,f:closeModal}]);
+});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!$("mv").hidden)closeModal()});
+refresh();
+/* layar kunci & musik: lihat skrip terpisah di atas */
+try{if(window.__lock){window.__lock.label(TEXT.startBtn,TEXT.contBtn,S.done.length>0||!!S.cap)}}catch(e){}
+</script>
+</body>
+</html>
